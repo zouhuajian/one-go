@@ -1,0 +1,3 @@
+application:
+  name: one-go
+  port: 8003

@@ -27,5 +27,5 @@ func InitRouter() *HttpServer {
 // /health
 //
 func registerBaseAPI(server *HttpServer) {
-	server.GinEngine.GET("/health", controller.CheckHealth)
+	server.GinEngine.GET("/", controller.CheckHealth)
 }

@@ -6,16 +6,10 @@ import (
 	"one-go/internal"
 )
 
-// UserController ...
+// MetricsHierarchy ...
 type MetricsHierarchy struct {
 	appname string `json:"appname"`
 	name    string `json:"name"`
-}
-
-type Response struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data interface{} `json:"data"`
 }
 
 // GetMetricsHierarchy
