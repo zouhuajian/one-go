@@ -1,3 +1,9 @@
 application:
   name: one-go
   port: 8003
+
+datasource:
+  mysql:
+    username: mysql
+    password: mysql
+    url: 

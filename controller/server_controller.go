@@ -2,10 +2,10 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"one-go/internal"
 )
 
 // CheckHealth ...
 func CheckHealth(c *gin.Context) {
-	c.String(http.StatusOK, "ok")
+	internal.APIResponse(c, nil, "ok")
 }
