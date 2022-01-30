@@ -6,6 +6,7 @@ import (
 )
 
 func InitMySQL() {
+
 	//-------1、打开数据库--------
 	db, err := sql.Open("mysql", "root:112233@tcp(127.0.0.1:3305)/test?charset=utf8&parseTime=True")
 	if err != nil {
