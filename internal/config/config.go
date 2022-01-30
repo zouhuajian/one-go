@@ -21,13 +21,13 @@ type MySQLConfig struct {
 	Password string `mapstructure:"password"`
 }
 
-type config struct {
+type Config struct {
 	// common
 	AppConfig   AppConfig   `mapstructure:"application"`
 	MySQLConfig MySQLConfig `mapstructure:"mysql"`
 }
 
-func InitConfig() *config {
+func InitConfig() *Config {
 	viper.SetConfigName("app")       // name of config file (without extension)
 	viper.SetConfigType("yaml")      // REQUIRED if the config file does not have the extension in the name
 	viper.AddConfigPath("./config/") // path to look for the config file in
@@ -35,7 +35,7 @@ func InitConfig() *config {
 	if err != nil {                  // Handle errors reading the config file
 		panic(fmt.Errorf("Fatal error config file: %w \n", err))
 	}
-	conf := &config{}
+	conf := &Config{}
 	err = viper.Unmarshal(conf)
 	if err != nil {
 		panic(fmt.Errorf("unable to decode into config struct, %w \n", err))
