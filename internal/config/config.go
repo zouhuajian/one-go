@@ -9,22 +9,22 @@ import (
 
 // AppConfig ...
 type AppConfig struct {
-	Name string `yaml:"application"` // 自定义名称
-	Port string `yaml:"port"`
+	Name string `mapstructure:"application"` // 自定义名称
+	Port string `mapstructure:"port"`
 }
 
 // MySQLConfig ...
 type MySQLConfig struct {
-	URL      string `yaml:"url"`
-	Database string `yaml:"database"`
-	UserName string `yaml:"username"`
-	Password string `yaml:"password"`
+	URL      string `mapstructure:"url"`
+	Database string `mapstructure:"database"`
+	UserName string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
 }
 
 type config struct {
 	// common
-	AppConfig   AppConfig   `yaml:"application"`
-	MySQLConfig MySQLConfig `yaml:"mysql"`
+	AppConfig   AppConfig   `mapstructure:"application"`
+	MySQLConfig MySQLConfig `mapstructure:"mysql"`
 }
 
 func InitConfig() *config {
@@ -38,10 +38,10 @@ func InitConfig() *config {
 	conf := &config{}
 	err = viper.Unmarshal(conf)
 	if err != nil {
-		fmt.Printf("unable to decode into config struct, %v", err)
+		panic(fmt.Errorf("unable to decode into config struct, %w \n", err))
 	}
+	log.Printf("config: %v", conf)
 	watchConfig()
-	fmt.Printf("config, %v", conf)
 	return conf
 }
 

@@ -7,7 +7,6 @@ import (
 
 func main() {
 	conf := config.InitConfig()
-	port := conf.AppConfig.Port
 	server := router.InitRouter()
-	server.GinEngine.Run(":" + port)
+	server.GinEngine.Run(":" + conf.AppConfig.Port)
 }
