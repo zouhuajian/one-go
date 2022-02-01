@@ -10,5 +10,5 @@ func RegisterRouterV1(g *gin.RouterGroup) {
 	//router.LoadHTMLGlob("template/*")
 
 	metricsApi := g.Group("/metrics")
-	metricsApi.GET("/hierarchy", controller.GetMetricsHierarchy)
+	metricsApi.GET("/hierarchy", controller.GetMetricHierarchy)
 }

@@ -3,7 +3,7 @@ application:
   port: 8003
 # mysql
 mysql:
-  url: localhost:3306
+  url: 192.168.3.11:3306
   database: one_go
-  username: mysql
-  password: mysql
+  username: root
+  password: 123456

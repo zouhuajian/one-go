@@ -18,7 +18,7 @@ func InitStorage(conf config.Config) {
 
 func initMySQL(conf config.MySQLConfig) {
 	log.Printf("mysql config {%#v}", conf)
-	uri := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8",
+	uri := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true",
 		conf.UserName,
 		conf.Password,
 		conf.URL,

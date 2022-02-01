@@ -1,22 +1,27 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"one-go/internal"
+	"one-go/models"
+	"one-go/service"
 )
 
-// MetricsHierarchy ...
-type MetricsHierarchy struct {
-	appname string `json:"appname"`
-	name    string `json:"name"`
-}
-
-// GetMetricsHierarchy
+// GetMetricHierarchy
 // @Router /api/v1/metrics/hierarchy
-func GetMetricsHierarchy(c *gin.Context) {
-	fmt.Printf("c=%v", c)
-	internal.APIResponse(c, nil, MetricsHierarchy{
-		name: "test",
-	})
+func GetMetricHierarchy(c *gin.Context) {
+	var params models.HierarchyParams
+	if err := c.BindQuery(&params); err != nil {
+		internal.APIResponse(c, err, nil)
+		return
+	}
+	//params.ServiceName, _ = c.GetQuery("service_name")
+	log.Printf("metric hierarchy params: %#v", params)
+	metricHierarchyList, err := service.GetMetricHierarchyList(&params)
+	if err != nil {
+		internal.APIResponse(c, err, nil)
+		return
+	}
+	internal.APIResponse(c, nil, metricHierarchyList)
 }
