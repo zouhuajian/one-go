@@ -2,6 +2,8 @@ package storage
 
 import (
 	"fmt"
+	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -9,11 +11,12 @@ import (
 	"time"
 )
 
-// MySQL ...
 var MySQL *gorm.DB
+var Redis *redis.Client
 
 func InitStorage(conf config.Config) {
 	initMySQL(conf.MySQLConfig)
+	initRedis(conf.RedisConfig)
 }
 
 func initMySQL(conf config.MySQLConfig) {
@@ -25,7 +28,6 @@ func initMySQL(conf config.MySQLConfig) {
 		conf.Database)
 	log.Printf("connect to mysql %s", uri)
 	// open mysql
-
 	db, err := gorm.Open(mysql.Open(uri), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
@@ -42,4 +44,19 @@ func initMySQL(conf config.MySQLConfig) {
 	//超时
 	sqlDB.SetConnMaxLifetime(time.Second * time.Duration(10))
 	MySQL = db
+}
+
+func initRedis(conf config.RedisConfig) {
+	log.Printf("redis config {%#v}", conf)
+	uri := fmt.Sprintf("redis://%s:%d/%d",
+		conf.Host,
+		conf.Port,
+		conf.Database)
+	log.Printf("connect to mysql %s", uri)
+	// open mysql
+	opt, err := redis.ParseURL(uri)
+	if err != nil {
+		logrus.Panicf("failed to connect redis, %v", err)
+	}
+	Redis = redis.NewClient(opt)
 }

@@ -7,3 +7,7 @@ mysql:
   database: one_go
   username: root
   password: 123456
+redis:
+  host: 192.168.3.11
+  port: 6379
+  database: 0

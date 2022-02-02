@@ -13,7 +13,7 @@ func InitCron() {
 	// 设置时区
 	local, _ := time.LoadLocation("Asia/Shanghai")
 	c := cron.New(cron.WithLocation(local), cron.WithSeconds())
-	spec := "*/2 * * * * *"
+	spec := "*/60 * * * * *"
 	// 添加一个任务，每 10s 执行一次
 	intervalId, err := c.AddFunc(spec, generateMetricHierarchyData)
 	if err != nil {

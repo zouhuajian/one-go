@@ -21,10 +21,17 @@ type MySQLConfig struct {
 	Password string `mapstructure:"password"`
 }
 
+type RedisConfig struct {
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Database int    `mapstructure:"database"`
+}
+
 type Config struct {
 	// common
 	AppConfig   AppConfig   `mapstructure:"application"`
 	MySQLConfig MySQLConfig `mapstructure:"mysql"`
+	RedisConfig RedisConfig `mapstructure:"redis"`
 }
 
 func InitConfig() *Config {

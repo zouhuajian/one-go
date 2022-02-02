@@ -33,7 +33,7 @@ func SelectMetricHierarchyList(params *HierarchyParams) ([]MetricHierarchy, erro
 	//result := models.DB.Table(MetricHierarchyTable).Where("service_name=?", params.ServiceName).Find(&metricHierarchyList)
 	result := storage.MySQL.Table(MetricHierarchyTable).Where(*params).Find(&metricHierarchyList).Limit(200)
 	if result.Error != nil {
-		logrus.Error("select metric hierarchy:{%#v} err:%s", params, result.Error.Error())
+		logrus.Errorf("select metric hierarchy:{%#v} err:%s", params, result.Error.Error())
 		return []MetricHierarchy{}, result.Error
 	}
 	return metricHierarchyList, nil
@@ -45,7 +45,7 @@ func InsertMetricHierarchy(metric *MetricHierarchy) error {
 		DoUpdates: clause.Assignments(map[string]interface{}{"update_time": metric.UpdateTime}),
 	}).Create(metric)
 	if result.Error != nil {
-		logrus.Error("insert metric:{%#v} err:%s", metric, result.Error.Error())
+		logrus.Errorf("insert metric:{%#v} err:%s", metric, result.Error.Error())
 		return result.Error
 	}
 	return nil
