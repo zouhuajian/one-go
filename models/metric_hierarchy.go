@@ -1,7 +1,8 @@
 package models
 
 import (
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm/clause"
 	"one-go/storage"
 	"time"
 )
@@ -19,8 +20,8 @@ type MetricHierarchy struct {
 }
 
 type HierarchyParams struct {
-	ServiceName string `form:"service_name" binding: "require"`
-	DataKind    int    `form:"data_kind"`
+	ServiceName string `form:"service_name" binding:"required"`
+	DataKind    int    `form:"data_kind" binding:"required"`
 }
 
 const (
@@ -30,7 +31,22 @@ const (
 func SelectMetricHierarchyList(params *HierarchyParams) ([]MetricHierarchy, error) {
 	var metricHierarchyList []MetricHierarchy
 	//result := models.DB.Table(MetricHierarchyTable).Where("service_name=?", params.ServiceName).Find(&metricHierarchyList)
-	result := storage.MySQL.Table(MetricHierarchyTable).Where(*params).Find(&metricHierarchyList)
-	log.Printf("row = %d, error = %#v\n", result.RowsAffected, result.Error)
+	result := storage.MySQL.Table(MetricHierarchyTable).Where(*params).Find(&metricHierarchyList).Limit(200)
+	if result.Error != nil {
+		logrus.Error("select metric hierarchy:{%#v} err:%s", params, result.Error.Error())
+		return []MetricHierarchy{}, result.Error
+	}
 	return metricHierarchyList, nil
+}
+
+func InsertMetricHierarchy(metric *MetricHierarchy) error {
+	result := storage.MySQL.Table(MetricHierarchyTable).Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "hash_code"}},
+		DoUpdates: clause.Assignments(map[string]interface{}{"update_time": metric.UpdateTime}),
+	}).Create(metric)
+	if result.Error != nil {
+		logrus.Error("insert metric:{%#v} err:%s", metric, result.Error.Error())
+		return result.Error
+	}
+	return nil
 }

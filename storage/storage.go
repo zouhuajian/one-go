@@ -18,7 +18,7 @@ func InitStorage(conf config.Config) {
 
 func initMySQL(conf config.MySQLConfig) {
 	log.Printf("mysql config {%#v}", conf)
-	uri := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true",
+	uri := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true&loc=Local",
 		conf.UserName,
 		conf.Password,
 		conf.URL,
@@ -40,6 +40,6 @@ func initMySQL(conf config.MySQLConfig) {
 	//打开
 	sqlDB.SetMaxOpenConns(10)
 	//超时
-	sqlDB.SetConnMaxLifetime(time.Second * time.Duration(60))
+	sqlDB.SetConnMaxLifetime(time.Second * time.Duration(10))
 	MySQL = db
 }

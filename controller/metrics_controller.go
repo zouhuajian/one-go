@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"one-go/internal"
 	"one-go/models"
 	"one-go/service"
@@ -17,10 +17,11 @@ func GetMetricHierarchy(c *gin.Context) {
 		return
 	}
 	//params.ServiceName, _ = c.GetQuery("service_name")
-	log.Printf("metric hierarchy params: %#v", params)
+	logrus.Printf("metric hierarchy params: %#v", params)
 	metricHierarchyList, err := service.GetMetricHierarchyList(&params)
 	if err != nil {
 		internal.APIResponse(c, err, nil)
+		logrus.Errorf("get metric hierarchy error, cause = %v", err)
 		return
 	}
 	internal.APIResponse(c, nil, metricHierarchyList)
