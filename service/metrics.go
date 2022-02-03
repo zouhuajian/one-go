@@ -10,6 +10,13 @@ import (
 	"one-go/storage"
 )
 
+type task struct {
+	key string
+	val []models.MetricHierarchy
+}
+
+var taskChan = make(chan task, 1000)
+
 func GetMetricHierarchyList(params *models.HierarchyParams) ([]models.MetricHierarchy, error) {
 	var val []models.MetricHierarchy
 	key := fmt.Sprintf("%s-%d", params.ServiceName, params.DataKind)
@@ -42,3 +49,11 @@ func GetMetricHierarchyList(params *models.HierarchyParams) ([]models.MetricHier
 	}
 	return val, nil
 }
+
+//func init() {
+//	go func() {
+//		select {
+//		case task := <-taskChan:
+//		}
+//	}()
+//}
