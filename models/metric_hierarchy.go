@@ -1,10 +1,11 @@
 package models
 
 import (
-	"github.com/sirupsen/logrus"
-	"gorm.io/gorm/clause"
 	"one-go/storage"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm/clause"
 )
 
 type MetricHierarchy struct {
@@ -48,5 +49,6 @@ func InsertMetricHierarchy(metric *MetricHierarchy) error {
 		logrus.Errorf("insert metric:{%#v} err:%s", metric, result.Error.Error())
 		return result.Error
 	}
+
 	return nil
 }
