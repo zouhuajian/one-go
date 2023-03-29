@@ -2,10 +2,10 @@ package cron
 
 import (
 	"fmt"
+	"github.com/one-go/one-web/models"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 	"math/rand"
-	"one-go/models"
 	"time"
 )
 

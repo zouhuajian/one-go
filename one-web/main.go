@@ -1,10 +1,10 @@
 package main
 
 import (
-	"one-go/internal/config"
-	"one-go/internal/cron"
-	"one-go/router"
-	"one-go/storage"
+	"github.com/one-go/one-web/internal/config"
+	"github.com/one-go/one-web/internal/cron"
+	"github.com/one-go/one-web/router"
+	"github.com/one-go/one-web/storage"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"one-go/internal"
+	"github.com/one-go/one-web/internal"
 )
 
 // CheckHealth ...

@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// ListNode 单向链表
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -20,7 +21,6 @@ func makeListNode(nums [5]int) *ListNode {
 
 func addInList(head1 *ListNode, head2 *ListNode) *ListNode {
 	// write code here
-
 	return nil
 }
 

@@ -6,9 +6,9 @@ import (
 	"encoding/gob"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/one-go/one-web/models"
+	"github.com/one-go/one-web/storage"
 	"github.com/sirupsen/logrus"
-	"one-go/models"
-	"one-go/storage"
 	"sync"
 	"time"
 )
@@ -70,7 +70,7 @@ func init() {
 // the operation was successful, and false if enqueuing would not have been
 // possible without blocking. Job is not enqueued in the latter case.
 // 非阻塞入队
-//如果想尝试入队，在需要阻塞的时候返回 fail 怎么办？这种方式能够获取提交任务的失败状态返回 503。关键在于使用 select 的 default 语句：
+// 如果想尝试入队，在需要阻塞的时候返回 fail 怎么办？这种方式能够获取提交任务的失败状态返回 503。关键在于使用 select 的 default 语句：
 func TryEnqueue(t task) bool {
 	select {
 	case taskChan <- t:

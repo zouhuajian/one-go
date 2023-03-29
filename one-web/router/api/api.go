@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"one-go/controller"
+	"github.com/one-go/one-web/controller"
 )
 
 func RegisterRouterV1(g *gin.RouterGroup) {

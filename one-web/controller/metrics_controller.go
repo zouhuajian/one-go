@@ -2,10 +2,10 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/one-go/one-web/internal"
+	"github.com/one-go/one-web/models"
+	"github.com/one-go/one-web/service"
 	"github.com/sirupsen/logrus"
-	"one-go/internal"
-	"one-go/models"
-	"one-go/service"
 )
 
 // GetMetricHierarchy

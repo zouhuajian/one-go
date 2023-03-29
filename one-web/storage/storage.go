@@ -3,11 +3,11 @@ package storage
 import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/one-go/one-web/internal/config"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
-	"one-go/internal/config"
 	"time"
 )
 

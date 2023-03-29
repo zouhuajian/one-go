@@ -1,7 +1,7 @@
 package models
 
 import (
-	"one-go/storage"
+	"github.com/one-go/one-web/storage"
 	"time"
 
 	"github.com/sirupsen/logrus"

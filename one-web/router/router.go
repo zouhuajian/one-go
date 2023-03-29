@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"one-go/controller"
-	"one-go/router/api"
+	"github.com/one-go/one-web/controller"
+	"github.com/one-go/one-web/router/api"
 )
 
 // HttpServer ...
@@ -25,7 +25,6 @@ func InitRouter() *HttpServer {
 
 // registerBaseAPI ...
 // /health
-//
 func registerBaseAPI(server *HttpServer) {
 	server.GinEngine.GET("/", controller.CheckHealth)
 }

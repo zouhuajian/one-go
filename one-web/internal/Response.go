@@ -2,8 +2,8 @@ package internal
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/one-go/one-web/internal/code"
 	"net/http"
-	"one-go/internal/code"
 )
 
 // Response ...
