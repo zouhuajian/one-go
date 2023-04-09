@@ -1,5 +1,3 @@
 module github.com/one-algorithm
 
-require (
-
-)
+go 1.20
