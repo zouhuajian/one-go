@@ -31,4 +31,5 @@ _site
 # vendor/
 
 # Go workspace file
+go.sum
 go.work.sum

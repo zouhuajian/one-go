@@ -2,42 +2,64 @@ package main
 
 import (
 	"fmt"
+	"github.com/shopspring/decimal"
 	"math"
 	"sort"
 )
 
 func main() {
-	arr := []int{1, 2, 3, 4, 5, 6, 100, 200, 300}
-	fmt.Println("Original array:", arr)
 
+	// arr := []int{10, 20, 10, 10, 10, 11, 12, 12, 123, 30}
+	arr := []int{21, 22, 23, 2, 20, 20, 20, 20, 20, 90}
+	fmt.Println("Original array:", arr)
+	filteredArr := removeOutliersViaQuartiles(arr, 2)
 	// Compute stability metric (mean absolute deviation)
-	stability := computeStabilityWithQuartiles(arr)
-	fmt.Printf("Stability: %f\n", stability)
+	stabilityScore := computeStabilityScore(filteredArr)
+
+	fmt.Printf("Stability Score: %f\n", stabilityScore)
+	// 将稳定性阈值定义为标准差的分数，当前为标准差的 n 倍
+	stabilityThreshold := decimal.NewFromFloat(stabilityScore).Mul(decimal.NewFromFloat(1.0)).InexactFloat64()
+	result := isStable(filteredArr, stabilityThreshold)
+	fmt.Printf("Stability Result: %v\n", result)
+}
+
+func isStable(arr []int, stabilityThreshold float64) bool {
+	n := len(arr)
+	mean := float64(sum(arr)) / float64(n)
+	notStabilityCount := 0
+	for _, val := range arr {
+		if math.Abs(float64(val)-mean) > stabilityThreshold {
+			notStabilityCount++
+		}
+	}
+	fmt.Printf("Stability threshold is %v, mean is %v, not stability element count: %v/%v\n",
+		stabilityThreshold, mean, notStabilityCount, n)
+	// 1/4 的元素低于阈值，则判断这个数组较为稳定
+	return notStabilityCount <= n/4
 }
 
 // Computes the mean absolute deviation of an integer array
-func computeStabilityWithQuartiles(arr []int) float64 {
-	// Remove outliers using IQR method
-	filteredArr := removeOutliersViaQuartiles(arr, 5.0)
-	n := len(filteredArr)
+// 基于标准偏差计算稳定性
+func computeStabilityScore(arr []int) float64 {
+	n := len(arr)
 	if n == 0 {
 		return 0
 	}
-	mean := float64(sum(filteredArr)) / float64(n)
+	mean := float64(sum(arr)) / float64(n)
 	sumAbsDev := 0.0
-	for _, val := range filteredArr {
-		sumAbsDev += math.Abs(float64(val) - mean)
+	for _, val := range arr {
+		sumAbsDev += math.Pow(float64(val)-mean, 2)
 	}
-	return sumAbsDev / float64(n)
+	return math.Sqrt(sumAbsDev / float64(n))
 }
 
 // 基于IQR(四分位距)移除离群值
 // threshold: 用于计算上下限阈值，比如2.0倍的
-func removeOutliersViaQuartiles(arr []int, threshold float64) []int {
+func removeOutliersViaQuartiles(arr []int, rate float64) []int {
 	q1, q3 := quartiles(arr)
 	iqr := q3 - q1
-	lowerBound := q1 - threshold*iqr
-	upperBound := q3 + threshold*iqr
+	lowerBound := q1 - rate*iqr
+	upperBound := q3 + rate*iqr
 	filteredArr := make([]int, 0, len(arr))
 	for _, val := range arr {
 		if float64(val) >= lowerBound && float64(val) <= upperBound {
